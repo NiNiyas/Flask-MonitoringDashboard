@@ -28,7 +28,7 @@ except ImportError:
 from sqlalchemy.orm import sessionmaker, relationship, scoped_session
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from flask_monitoringdashboard import config
+from flask_monitoringdashboard import config, log
 
 Base = declarative_base()
 
@@ -246,7 +246,7 @@ def session_scope():
         session.commit()
     except Exception as e:
         session.rollback()
-        print("no commit has been made, due to the following error: {}".format(e))
+        log("no commit has been made, due to the following error: {}".format(e))
     finally:
         session.close()
 

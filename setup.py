@@ -14,6 +14,11 @@ if "--micro" in sys.argv:
     sys.argv.remove("--micro")
     log("In micro mode")
 
+cli = False
+if "--cli" in sys.argv:
+    cli = True
+    sys.argv.remove("--cli")
+
 
 def get_description():
     with open(loc + "/docs/README.rst") as readme:
@@ -73,7 +78,9 @@ setuptools.setup(
     description="Automatically monitor the evolving performance of Flask/Python web services.",
     long_description=get_description(),
     install_requires=required,
-    entry_points={"flask.commands": ["fmd=flask_monitoringdashboard.cli:fmd"]},
+    entry_points={"flask.commands": ["fmd=flask_monitoringdashboard.cli:fmd"]}
+    if cli
+    else "",
     classifiers=[
         "Environment :: Web Environment",
         "Intended Audience :: Developers",
