@@ -6,16 +6,14 @@
 # full list see the documentation:
 # http://www.sphinx-doc.org/en/stable/config
 import datetime
+import json
+import os
+import sys
 
 # -- Path setup --------------------------------------------------------------
-
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-
-import os
-import sys
-import json
 
 sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.abspath('../flask-monitoringdashboard'))
@@ -30,7 +28,7 @@ author = constants['author']
 version = constants['version']
 
 release = version
-copyright = '{}, {}. Version {}'.format(datetime.datetime.utcnow().year, author, version)
+copyright = '{}, {}. Version {}'.format(datetime.datetime.now(datetime.UTC).year, author, version)
 
 # -- General configuration ---------------------------------------------------
 
@@ -68,7 +66,7 @@ master_doc = 'index'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = 'en'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -84,14 +82,41 @@ language = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'flask'
+html_theme = 'pydata_sphinx_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {'github_fork': 'flask-dashboard/Flask-MonitoringDashboard'}
 
+
+html_theme_options = {
+    "header_links_before_dropdown": 4,
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/flask-dashboard/Flask-MonitoringDashboard",
+            "icon": "fa-brands fa-github",
+        },
+        {
+            "name": "PyPI",
+            "url": "https://pypi.org/project/Flask-MonitoringDashboard/",
+            "icon": "fa-brands fa-python"
+        },
+    ],
+    "logo": {
+        "text": "Flask Monitoring Dashboard",
+        "image_dark": "img/header-nobg.png",
+        "alt_text": "Flask Monitoring Dashboard",
+    },
+    "show_toc_level": 2,
+    "navbar_align": "left",
+    "navbar_center": ["navbar-nav"],
+    "footer_start": ["copyright.html"],
+    "footer_center": ["sphinx-version.html"],
+}
+
+html_favicon = "img/favicon.ico"
 html_sidebars = {'**': ['globaltoc.html', 'searchbox.html', 'sourcelink.html']}
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -114,7 +139,6 @@ html_sidebars = {'**': ['globaltoc.html', 'searchbox.html', 'sourcelink.html']}
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'Flask-MonitoringDashboarddoc'
-
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -146,7 +170,6 @@ latex_documents = [
     )
 ]
 
-
 # -- Options for manual page output ------------------------------------------
 
 # One entry per manual page. List of tuples
@@ -160,7 +183,6 @@ man_pages = [
         1,
     )
 ]
-
 
 # -- Options for Texinfo output ----------------------------------------------
 
@@ -178,7 +200,6 @@ texinfo_documents = [
         'Miscellaneous',
     )
 ]
-
 
 # -- Extension configuration -------------------------------------------------
 

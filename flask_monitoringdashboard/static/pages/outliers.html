@@ -1,6 +1,8 @@
 <div>
     <div class="card mb-3">
-        <div class="card-header"><h4>{{ title }}</h4></div>
+        <div class="card-header">
+            <h4>{{ title }}</h4>
+        </div>
         <div class="card-body">
             <div id="chart">
                 <div class="spinner" ng-controller="FormController" ng-show="handler.isLoading">
@@ -14,8 +16,10 @@
         </div>
     </div>
 
-    <div class="card mb-3" style="margin-top: 10px;">
-        <div class="card-header"><h4>Outliers data</h4></div>
+    <div class="card mb-3 mt-3">
+        <div class="card-header">
+            <h4>Outliers data</h4>
+        </div>
         <div class="card-body">
 
             <pagination></pagination>
@@ -23,52 +27,47 @@
             <div class="card" ng-repeat="row in table" style="margin-bottom: 10px;">
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class="well-sm"><strong>Request url: </strong>{{ row.request_url }}</div>
+                        <div class="well"><strong>Request url: </strong>{{ row.request_url }}</div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="well-sm"><strong>Request
-                            time: </strong>{{ row.request.time_requested | dateLayout }}</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="well-sm"><strong>Request Headers</strong></div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="well-sm"><strong>Request Environment</strong></div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="well-sm scrollable">{{ row.request_header }}</div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="well-sm scrollable">{{ row.request_environment }}</div>
-                    </div>
-                </div>
-
-                <div class="row" style="margin-top: 10px">
-                    <div class="col-sm-12">
-                        <div class="well-sm">
-                            <strong>CPU Percent: </strong>{{ row.cpu_percent }}
+                        <div class="well"><strong>Request time: </strong>{{ row.request.time_requested | dateLayout }}
                         </div>
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-sm-6">
+                        <div class="well"><strong>Request Headers</strong></div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="well"><strong>Request Environment</strong></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="well scrollable">{{ row.request_header }}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="well scrollable">{{ row.request_environment }}</div>
+                    </div>
+                </div>
+                <div class="row mt-3">
                     <div class="col-sm-12">
-                        <div class="well-sm">
-                            <strong>Memory: </strong>{{ row.memory }}
-                        </div>
+                        <div class="well"><strong>CPU Percent: </strong>{{ row.cpu_percent }}</div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="well-sm"><strong>Stack Trace</strong></div>
+                        <div class="well"><strong>Memory: </strong>{{ row.memory }}</div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="well-sm scrollable">{{ row.stacktrace }}</div>
+                        <div class="well"><strong>Stack Trace</strong></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="well scrollable">{{ row.stacktrace }}</div>
                     </div>
                 </div>
             </div>

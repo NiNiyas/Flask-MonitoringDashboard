@@ -24,6 +24,7 @@ from tests.fixtures.database import ModelFactory
 class UserFactory(ModelFactory):
     class Meta:
         model = User
+
     username = factory.LazyFunction(lambda: str(uuid.uuid4()))
     password_hash = factory.LazyFunction(lambda: str(uuid.uuid4()))
     is_admin = True
@@ -47,7 +48,7 @@ class EndpointFactory(ModelFactory):
     name = factory.LazyFunction(lambda: str(uuid.uuid4()))
     monitor_level = 1
     time_added = factory.LazyFunction(lambda: datetime.utcnow() - timedelta(days=1))
-    version_added = '1.0'
+    version_added = "1.0"
     last_requested = factory.LazyFunction(datetime.utcnow)
 
 
@@ -60,7 +61,7 @@ class RequestFactory(ModelFactory):
     time_requested = factory.LazyFunction(datetime.utcnow)
     version_requested = factory.LazyFunction(lambda: str(uuid.uuid4()))
     group_by = None
-    ip = factory.Faker('ipv4_private')
+    ip = factory.Faker("ipv4_private")
     status_code = 200
 
 
@@ -81,10 +82,10 @@ class CodeLineFactory(ModelFactory):
     class Meta:
         model = CodeLine
 
-    filename = 'abc.py'
+    filename = "abc.py"
     line_number = factory.LazyFunction(lambda: int(random() * 100))
-    function_name = 'f'
-    code = 'a=b'
+    function_name = "f"
+    code = "a=b"
 
 
 class StackLineFactory(ModelFactory):
@@ -102,7 +103,7 @@ class CustomGraphFactory(ModelFactory):
     class Meta:
         model = CustomGraph
 
-    title = factory.Faker('name')
+    title = factory.Faker("name")
     time_added = factory.LazyFunction(datetime.utcnow)
     version_added = factory.LazyFunction(lambda: str(uuid.uuid4()))
 
@@ -121,7 +122,7 @@ class GroupedStackLineFactory(factory.Factory):
         model = GroupedStackLine
 
     indent = 0
-    code = 'code'
+    code = "code"
     values = [10, 10, 40]
     total_sum = 100
     total_hits = 6
@@ -141,23 +142,23 @@ class PathHashFactory(factory.Factory):
     @classmethod
     def _create(cls, model_class, *args, **kwargs):
         obj = model_class()
-        obj._string_hash = kwargs.get('_string_hash')
+        obj._string_hash = kwargs.get("_string_hash")
         return obj
 
 
-register(UserFactory, 'user')
-register(UserFactory, 'another_user')
-register(EndpointFactory, 'endpoint')
-register(RequestFactory, 'request_1')  # unfortunately, we can't use fixture name: 'request'
-register(RequestFactory, 'request_2')
-register(OutlierFactory, 'outlier_1', request=LazyFixture('request_1'))
-register(OutlierFactory, 'outlier_2', request=LazyFixture('request_2'))
-register(CodeLineFactory, 'code_line')
-register(StackLineFactory, 'stack_line', request=LazyFixture('request_1'))
-register(StackLineFactory, 'stack_line_2', request=LazyFixture('request_2'), indent=1)
-register(CustomGraphFactory, 'custom_graph')
-register(CustomGraphDataFactory, 'custom_graph_data')
+register(UserFactory, "user")
+register(UserFactory, "another_user")
+register(EndpointFactory, "endpoint")
+register(RequestFactory, "request_1")  # unfortunately, we can't use fixture name: 'request'
+register(RequestFactory, "request_2")
+register(OutlierFactory, "outlier_1", request=LazyFixture("request_1"))
+register(OutlierFactory, "outlier_2", request=LazyFixture("request_2"))
+register(CodeLineFactory, "code_line")
+register(StackLineFactory, "stack_line", request=LazyFixture("request_1"))
+register(StackLineFactory, "stack_line_2", request=LazyFixture("request_2"), indent=1)
+register(CustomGraphFactory, "custom_graph")
+register(CustomGraphDataFactory, "custom_graph_data")
 
-register(GroupedStackLineFactory, 'grouped_stack_line')
-register(StringHashFactory, 'string_hash')
-register(PathHashFactory, 'path_hash')
+register(GroupedStackLineFactory, "grouped_stack_line")
+register(StringHashFactory, "string_hash")
+register(PathHashFactory, "path_hash")

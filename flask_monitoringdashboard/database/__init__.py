@@ -36,7 +36,7 @@ Base = declarative_base()
 class User(Base):
     """Table for storing user management."""
 
-    __tablename__ = '{}User'.format(config.table_prefix)
+    __tablename__ = "{}User".format(config.table_prefix)
 
     id = Column(Integer, primary_key=True)
 
@@ -59,7 +59,7 @@ class User(Base):
 class Endpoint(Base):
     """Table for storing information about the endpoints."""
 
-    __tablename__ = '{}Endpoint'.format(config.table_prefix)
+    __tablename__ = "{}Endpoint".format(config.table_prefix)
 
     id = Column(Integer, primary_key=True)
 
@@ -69,7 +69,7 @@ class Endpoint(Base):
     monitor_level = Column(Integer, default=config.monitor_level)
     """0 - disabled, 1 - performance, 2 - outliers, 3 - profiler + outliers"""
 
-    time_added = Column(DateTime, default=datetime.datetime.utcnow)
+    time_added = Column(DateTime, default=datetime.datetime.now(datetime.UTC))
     """Time when the endpoint was added."""
 
     version_added = Column(String(100), default=config.version)
@@ -82,18 +82,18 @@ class Endpoint(Base):
 class Request(Base):
     """Table for storing measurements of requests."""
 
-    __tablename__ = '{}Request'.format(config.table_prefix)
+    __tablename__ = "{}Request".format(config.table_prefix)
 
     id = Column(Integer, primary_key=True)
 
     endpoint_id = Column(Integer, ForeignKey(Endpoint.id))
-    endpoint = relationship(Endpoint, backref='requests')
+    endpoint = relationship(Endpoint, backref="requests")
     """The endpoint that handles the request."""
 
     duration = Column(Float, nullable=False)
     """Processing time of the request in milliseconds."""
 
-    time_requested = Column(DateTime, default=datetime.datetime.utcnow)
+    time_requested = Column(DateTime, default=datetime.datetime.now(datetime.UTC))
     """Moment when the request was handled."""
 
     version_requested = Column(String(100), default=config.version)
@@ -108,18 +108,18 @@ class Request(Base):
     status_code = Column(Integer, nullable=True)
     """HTTP status code of the request."""
 
-    outlier = relationship("Outlier", uselist=False, back_populates='request')
+    outlier = relationship("Outlier", uselist=False, back_populates="request")
 
 
 class Outlier(Base):
     """Table for storing information about outliers."""
 
-    __tablename__ = '{}Outlier'.format(config.table_prefix)
+    __tablename__ = "{}Outlier".format(config.table_prefix)
 
     id = Column(Integer, primary_key=True)
 
     request_id = Column(Integer, ForeignKey(Request.id))
-    request = relationship(Request, back_populates='outlier')
+    request = relationship(Request, back_populates="outlier")
     """Request of the outlier."""
 
     request_header = Column(TEXT)
@@ -146,7 +146,7 @@ class CodeLine(Base):
     This is a quadruple (filename, line_number, function_name, code) that uniquely
     identifies a line in the code."""
 
-    __tablename__ = '{}CodeLine'.format(config.table_prefix)
+    __tablename__ = "{}CodeLine".format(config.table_prefix)
 
     id = Column(Integer, primary_key=True)
 
@@ -166,7 +166,7 @@ class CodeLine(Base):
 class StackLine(Base):
     """Table for storing lines of execution paths of calls."""
 
-    __tablename__ = '{}StackLine'.format(config.table_prefix)
+    __tablename__ = "{}StackLine".format(config.table_prefix)
 
     request_id = Column(Integer, ForeignKey(Request.id), primary_key=True)
     request = relationship(Request, backref="stack_lines")
@@ -189,14 +189,14 @@ class StackLine(Base):
 class CustomGraph(Base):
     """Table for storing custom graphs names."""
 
-    __tablename__ = '{}CustomGraph'.format(config.table_prefix)
+    __tablename__ = "{}CustomGraph".format(config.table_prefix)
 
     graph_id = Column(Integer, primary_key=True)
 
     title = Column(String(250), nullable=False, unique=True)
     """Title of this graph."""
 
-    time_added = Column(DateTime, default=datetime.datetime.utcnow)
+    time_added = Column(DateTime, default=datetime.datetime.now(datetime.UTC))
     """When the graph was first added to the dashboard."""
 
     version_added = Column(String(100), default=config.version)
@@ -206,7 +206,7 @@ class CustomGraph(Base):
 class CustomGraphData(Base):
     """Table for storing data collected by custom graphs."""
 
-    __tablename__ = '{}CustomGraphData'.format(config.table_prefix)
+    __tablename__ = "{}CustomGraphData".format(config.table_prefix)
 
     id = Column(Integer, primary_key=True)
 
@@ -214,7 +214,7 @@ class CustomGraphData(Base):
     graph = relationship(CustomGraph, backref="data")
     """Graph for which the data is collected."""
 
-    time = Column(DateTime, default=datetime.datetime.utcnow)
+    time = Column(DateTime, default=datetime.datetime.now(datetime.UTC))
     """Moment when the data is collected."""
 
     value = Column(Float)
@@ -246,7 +246,7 @@ def session_scope():
         session.commit()
     except Exception as e:
         session.rollback()
-        print('No commit has been made, due to the following error: {}'.format(e))
+        print("no commit has been made, due to the following error: {}".format(e))
     finally:
         session.close()
 
@@ -266,4 +266,12 @@ def row2dict(row):
 
 
 def get_tables():
-    return [Endpoint, Request, Outlier, StackLine, CodeLine, CustomGraph, CustomGraphData]
+    return [
+        Endpoint,
+        Request,
+        Outlier,
+        StackLine,
+        CodeLine,
+        CustomGraph,
+        CustomGraphData,
+    ]

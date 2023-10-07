@@ -24,7 +24,7 @@ class StringHash(object):
         return self._h[string]
 
     def unhash(self, hash):
-        """ Opposite of hash.
+        """Opposite of hash.
 
         unhash(hash('abc')) == 'abc
 
@@ -36,4 +36,4 @@ class StringHash(object):
             if v == hash:
                 return k
 
-        raise ValueError('Value not possible to unhash: {}'.format(hash))
+        raise ValueError("Value not possible to unhash: {}".format(hash))

@@ -31,8 +31,8 @@ def get_endpoint_overview(session):
     :param session: session for the database
     :return: A list of properties for each endpoint that is found in the database
     """
-    week_ago = datetime.datetime.utcnow() - datetime.timedelta(days=7)
-    now_local = to_local_datetime(datetime.datetime.utcnow())
+    week_ago = datetime.datetime.now(datetime.UTC) - datetime.timedelta(days=7)
+    now_local = to_local_datetime(datetime.datetime.now(datetime.UTC))
     today_local = now_local.replace(hour=0, minute=0, second=0, microsecond=0)
     today_utc = to_utc_datetime(today_local)
 
@@ -59,20 +59,20 @@ def get_endpoint_overview(session):
 
     return [
         {
-            'id': endpoint.id,
-            'name': endpoint.name,
-            'blueprint': get_blueprint(endpoint.name),
-            'monitor': endpoint.monitor_level,
-            'color': get_color(endpoint.name),
-            'hits-today': get_value(hits_today, endpoint.id),
-            'hits-today-errors': get_value(hits_today_errors, endpoint.id),
-            'hits-week': get_value(hits_week, endpoint.id),
-            'hits-week-errors': get_value(hits_week_errors, endpoint.id),
-            'hits-overall': get_value(hits, endpoint.id),
-            'median-today': get_value(median_today, endpoint.id),
-            'median-week': get_value(median_week, endpoint.id),
-            'median-overall': get_value(median_overall, endpoint.id),
-            'last-accessed': get_value(access_times, endpoint.name, default=None),
+            "id": endpoint.id,
+            "name": endpoint.name,
+            "blueprint": get_blueprint(endpoint.name),
+            "monitor": endpoint.monitor_level,
+            "color": get_color(endpoint.name),
+            "hits-today": get_value(hits_today, endpoint.id),
+            "hits-today-errors": get_value(hits_today_errors, endpoint.id),
+            "hits-week": get_value(hits_week, endpoint.id),
+            "hits-week-errors": get_value(hits_week_errors, endpoint.id),
+            "hits-overall": get_value(hits, endpoint.id),
+            "median-today": get_value(median_today, endpoint.id),
+            "median-week": get_value(median_week, endpoint.id),
+            "median-overall": get_value(median_overall, endpoint.id),
+            "last-accessed": get_value(access_times, endpoint.name, default=None),
         }
         for endpoint in get_endpoints(session)
     ]
@@ -91,10 +91,10 @@ def get_endpoint_users(session, endpoint_id, users):
     first_requests = get_first_requests(session, endpoint_id)
     return [
         {
-            'user': u,
-            'date': get_value(first_requests, u),
-            'values': get_value(times, u),
-            'color': get_color(u),
+            "user": u,
+            "date": get_value(first_requests, u),
+            "values": get_value(times, u),
+            "color": get_color(u),
         }
         for u in users
     ]
@@ -113,10 +113,10 @@ def get_endpoint_versions(session, endpoint_id, versions):
     first_requests = get_first_requests(session, endpoint_id)
     return [
         {
-            'version': v,
-            'date': get_value(first_requests, v),
-            'values': get_value(times, v),
-            'color': get_color(v),
+            "version": v,
+            "date": get_value(first_requests, v),
+            "values": get_value(times, v),
+            "color": get_color(v),
         }
         for v in versions
     ]
@@ -131,8 +131,7 @@ def get_api_performance(session, endpoints):
     db_endpoints = [get_endpoint_by_name(session, end) for end in endpoints]
     data = get_endpoint_data_grouped(session, lambda x: simplify(x, 10))
     return [
-        {'name': end.name, 'values': get_value(data, end.id, default=[])}
-        for end in db_endpoints
+        {"name": end.name, "values": get_value(data, end.id, default=[])} for end in db_endpoints
     ]
 
 
@@ -145,7 +144,7 @@ def set_endpoint_rule(session, endpoint_name, monitor_level):
     update_endpoint(session, endpoint_name, value=monitor_level)
 
     # Remove wrapper
-    original = getattr(config.app.view_functions[endpoint_name], 'original', None)
+    original = getattr(config.app.view_functions[endpoint_name], "original", None)
     if original:
         config.app.view_functions[endpoint_name] = original
     session.commit()

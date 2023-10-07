@@ -1,25 +1,20 @@
-<div class="modal fade" id="{{ name }}Modal" tabindex="-1" role="dialog"
-     aria-labelledby="modalLabel{{ name }}"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div aria-hidden="true" class="modal fade" id="{{ name }}Modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form ng-submit="modal.confirm(name)">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalLabel{{ name }}">{{ title }}</h5>
-                    <button class="close" type="button" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
                 <div class="modal-body">
                     <ng-transclude></ng-transclude>
                     <p ng-show="modal.error[name]" style="color: red;">Error: {{ modal.error[name] }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">
                         {{ no || "No" }}
                     </button>
-                    <button type="submit" class="btn btn-primary">
+                    <button class="btn btn-primary" type="submit">
                         {{ yes || "Yes" }}
                     </button>
                 </div>

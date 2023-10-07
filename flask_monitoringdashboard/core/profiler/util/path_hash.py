@@ -1,7 +1,7 @@
 from flask_monitoringdashboard.core.profiler.util.string_hash import StringHash
 
-STRING_SPLIT = '->'
-LINE_SPLIT = ':'
+STRING_SPLIT = "->"
+LINE_SPLIT = ":"
 
 
 class PathHash(object):
@@ -22,7 +22,7 @@ class PathHash(object):
 
     def __init__(self):
         self._string_hash = StringHash()
-        self._current_path = ''
+        self._current_path = ""
 
     def set_path(self, path):
         self._current_path = path
@@ -59,7 +59,7 @@ class PathHash(object):
         return str(self._string_hash.hash(fn)) + LINE_SPLIT + str(ln)
 
     def _decode(self, string):
-        """ Opposite of _encode
+        """Opposite of _encode
 
         Example: _decode('0:12') => ('fn1', 12)
         """
@@ -97,7 +97,7 @@ class PathHash(object):
         :param index: index in the stack_lines, so 0 <= index < len(stack_lines)
         :return: the StackLinePath that belongs to the given index
         """
-        self.set_path('')
+        self.set_path("")
         path = []
         while index >= 0:
             path.append(stack_lines[index].code)

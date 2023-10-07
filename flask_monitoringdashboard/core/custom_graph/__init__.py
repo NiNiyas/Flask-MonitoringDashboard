@@ -4,6 +4,7 @@ import os
 from apscheduler.schedulers import SchedulerAlreadyRunningError
 from apscheduler.schedulers.background import BackgroundScheduler
 
+from flask_monitoringdashboard.core.logger import log
 from flask_monitoringdashboard.database import session_scope
 from flask_monitoringdashboard.database.custom_graph import (
     add_value,
@@ -15,13 +16,13 @@ scheduler = BackgroundScheduler()
 
 
 def init(app):
-    if not app.debug or os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
+    if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
         try:
             scheduler.start()
-            print('Scheduler started')
             atexit.register(lambda: scheduler.shutdown())
+            log("Scheduler started")
         except SchedulerAlreadyRunningError as err:
-            print(err)
+            log(err)
 
 
 def register_graph(name):

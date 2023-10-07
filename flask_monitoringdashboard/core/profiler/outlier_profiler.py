@@ -26,10 +26,14 @@ class OutlierProfiler(threading.Thread):
         self._group_by = group_by
         self._cpu_percent = None
         self._memory = None
-        self._stacktrace = ''
+        self._stacktrace = ""
         self._exit = threading.Event()
 
-        self._request = str(request.headers), str(request.environ), request.url.encode('utf-8')
+        self._request = (
+            str(request.headers),
+            str(request.environ),
+            request.url.encode("utf-8"),
+        )
 
     def run(self):
         # sleep for average * ODC ms
@@ -40,7 +44,7 @@ class OutlierProfiler(threading.Thread):
             try:
                 frame = sys._current_frames()[self._current_thread]
             except KeyError:
-                log('Can\'t get the stacktrace of the main thread.')
+                log("Can't get the stacktrace of the main thread.")
                 return
             in_endpoint_code = False
             # filename, line number, function name, source code line
@@ -53,7 +57,7 @@ class OutlierProfiler(threading.Thread):
                     )
 
             # Set the values in the object
-            self._stacktrace = '<br />'.join(stack_list)
+            self._stacktrace = "<br />".join(stack_list)
             self._cpu_percent = str(psutil.cpu_percent(interval=None, percpu=True))
             self._memory = str(psutil.virtual_memory())
 

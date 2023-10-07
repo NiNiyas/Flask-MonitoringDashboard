@@ -1,5 +1,8 @@
 // Importing this font here will make it pass through the file loader, moving it to fonts/ directory
 import "@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2"
+import "@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf"
+
+import '../sass/app.scss';
 
 // Plotly
 import Plotly from 'plotly.js-cartesian-dist'
@@ -12,7 +15,7 @@ import $ from 'jquery';
 window.$ = window.jQuery = $;
 
 // Popper.js
-import 'popper.js';
+import { createPopper } from '@popperjs/core';
 
 require('bootstrap');
 
@@ -176,6 +179,34 @@ app.config(['$locationProvider', '$routeProvider', function ($locationProvider, 
     });
 }]);
 
+app.factory('httpHeaderInterceptor', [
+	'$injector',
+	function ($injector) {
+	    var token = document.getElementById("csrfToken")?.value || '';
+		var excludedUrls = [
+			'https://pypi.org/pypi/Flask-MonitoringDashboard/json',
+		];
+		return {
+			request: function (config) {
+				var $http = $injector.get('$http');
+				var excludedRequest = excludedUrls.some(function (url) {
+					return config.url.includes(url);
+				});
+				if (!excludedRequest) {
+					config.headers['X-CSRFToken'] = token;
+				}
+				return config;
+			}
+		};
+	}
+]).config([
+	'$httpProvider',
+	function ($httpProvider) {
+		$httpProvider.interceptors.push('httpHeaderInterceptor');
+	}
+]);
+
+
 // Toggle the side navigation
 $("#sidenavToggler").click(function (e) {
     e.preventDefault();
@@ -189,5 +220,39 @@ $(".navbar-sidenav .nav-link-collapse").click(function (e) {
     $("body").removeClass("sidenav-toggled");
 });
 
-
+document.addEventListener('click', function (event) {
+	try {
+		var isClickInsideNavbar = document.querySelector('.navbar').contains(event.target);
+		var isNavbarTogglerVisible = window.getComputedStyle(document.querySelector('.navbar-toggler')).display !== 'none';
+		if (isNavbarTogglerVisible && !isClickInsideNavbar) {
+			document.querySelector('.navbar-collapse').classList.remove('show');
+		}
+	} catch (err) {
+	}
+});
+document.addEventListener('DOMContentLoaded', function () {
+	try {
+		var toastElements = document.querySelectorAll('.toast');
+		if (toastElements) {
+			toastElements.forEach(function (toast) {
+				var bootstrapToast = new bootstrap.Toast(toast);
+				bootstrapToast.show();
+			});
+		}
+	} catch (err) {
+	}
+	function addDarkmodeWidget() {
+		new Darkmode({
+			time: '0.3s',
+			mixColor: '#fff',
+			backgroundColor: '#fff',
+			buttonColorDark: '#100f2c',
+			buttonColorLight: '#fff',
+			saveInCookies: true,
+			label: '🌓',
+			autoMatchOsTheme: true
+		}).showWidget();
+	}
+	window.addEventListener('load', addDarkmodeWidget);
+});
 window.app = app;

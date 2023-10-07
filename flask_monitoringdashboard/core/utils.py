@@ -27,14 +27,14 @@ def get_endpoint_details(session, endpoint_id):
     methods = [list(rule.methods) for rule in flask_rule]
     methods = sum(methods, [])  # flatten list
     return {
-        'id': endpoint_id,
-        'color': get_color(endpoint.name),
-        'methods': list(dict.fromkeys(methods)),
-        'endpoint': endpoint.name,
-        'rules': [r.rule for r in get_rules(endpoint.name)],
-        'monitor-level': endpoint.monitor_level,
-        'url': get_url(endpoint.name),
-        'total_hits': count_requests(session, endpoint.id),
+        "id": endpoint_id,
+        "color": get_color(endpoint.name),
+        "methods": list(dict.fromkeys(methods)),
+        "endpoint": endpoint.name,
+        "rules": [r.rule for r in get_rules(endpoint.name)],
+        "monitor-level": endpoint.monitor_level,
+        "url": get_url(endpoint.name),
+        "total_hits": count_requests(session, endpoint.id),
     }
 
 
@@ -47,16 +47,16 @@ def get_details(session):
     import json
     from flask_monitoringdashboard import loc
 
-    with open(loc() + 'constants.json', 'r') as f:
+    with open(loc() + "constants.json", "r") as f:
         constants = json.load(f)
 
     return {
-        'link': config.link,
-        'dashboard-version': constants['version'],
-        'config-version': config.version,
-        'first-request': get_date_of_first_request(session),
-        'first-request-version': get_date_of_first_request_version(session, config.version),
-        'total-requests': count_total_requests(session),
+        "link": config.link,
+        "dashboard-version": constants["version"],
+        "config-version": config.version,
+        "first-request": get_date_of_first_request(session),
+        "first-request-version": get_date_of_first_request_version(session, config.version),
+        "total-requests": count_total_requests(session),
     }
 
 

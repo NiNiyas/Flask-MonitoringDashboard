@@ -1,78 +1,77 @@
-<ul class="navbar-nav navbar-sidenav nav-pills">
+<ul class="navbar-nav navbar-sidenav nav-pills flex-column">
     <li class="nav-item" title="Dashboard">
-        <a class="nav-link nav-link-collapse collapsed"
-           data-toggle="collapse" data-target="#collapseDashboard">
+        <a class="nav-link nav-link-collapse collapsed" data-bs-target="#collapseDashboard" data-bs-toggle="collapse">
             <i class="fas fa-tachometer-alt"></i>
             <span class="nav-link-text">Dashboard</span>
         </a>
-        <ul class="sidenav-second-level collapse" id="collapseDashboard">
+        <ul class="sidenav-second-level collapse show" id="collapseDashboard">
             <li ng-class="{'active': menu.page=='overview'}">
-                <a href="overview">Overview</a></li>
+                <a href="overview" class="menu-link">Overview</a></li>
             <li ng-class="{'active': menu.page=='hourly_load'}">
-                <a href="hourly_load">Hourly API Utilization</a></li>
+                <a href="hourly_load" class="menu-link">Hourly API Utilization</a></li>
             <li ng-class="{'active': menu.page=='multi_version'}">
-                <a href="multi_version">Multi Version API Utilization</a></li>
+                <a href="multi_version" class="menu-link">Multi Version API Utilization</a></li>
             <li ng-class="{'active': menu.page=='daily_load'}">
-                <a href="daily_utilization">Daily API Utilization</a></li>
+                <a href="daily_utilization" class="menu-link">Daily API Utilization</a></li>
             <li ng-class="{'active': menu.page=='api_performance'}">
-                <a href="api_performance">API Performance</a></li>
+                <a href="api_performance" class="menu-link">API Performance</a></li>
             <li ng-class="{'active': menu.page=='reporting'}">
-                <a href="reporting">Reporting</a></li>
+                <a href="reporting" class="menu-link">Reporting</a></li>
         </ul>
     </li>
 
-    <li class="nav-item" data-toggle="tooltip" data-placement="right" ng-show="menu.endpoint.info.id > 0"
-        data-original-title="{{ menu.endpoint.info.endpoint }}">
-        <a class="nav-link nav-link-collapse collapsed"
-           data-toggle="collapse" data-target="#collapseEndpoint">
+    <li class="nav-item" data-bs-original-title="{{ menu.endpoint.info.endpoint }}" data-bs-placement="right"
+        data-bs-toggle="tooltip" ng-show="menu.endpoint.info.id > 0">
+        <a class="nav-link nav-link-collapse collapsed" data-bs-target="#collapseEndpoint" data-bs-toggle="collapse">
             <i class="fa fa-fw fa-asterisk"></i>
             <span class="nav-link-text">{{ menu.endpoint.info.endpoint }}</span>
         </a>
         <ul class="sidenav-second-level collapse" id="collapseEndpoint">
             <li ng-class="{'active': menu.page=='endpoint_hourly'}">
-                <a href="endpoint/{{ menu.endpoint.info.id }}/hourly_load">
+                <a href="endpoint/{{ menu.endpoint.info.id }}/hourly_load" class="menu-link">
                     Hourly API Utilization</a></li>
             <li ng-class="{'active': menu.page=='endpoint_user_version'}">
-                <a href="endpoint/{{ menu.endpoint.info.id }}/version_user">
+                <a href="endpoint/{{ menu.endpoint.info.id }}/version_user" class="menu-link">
                     User-Focused Multi-Version Performance</a></li>
             <li ng-class="{'active': menu.page=='endpoint_ip'}">
-                <a href="endpoint/{{ menu.endpoint.info.id }}/version_ip">
+                <a href="endpoint/{{ menu.endpoint.info.id }}/version_ip" class="menu-link">
                     IP-Focused Multi-Version Performance</a></li>
             <li ng-class="{'active': menu.page=='endpoint_version'}">
-                <a href="endpoint/{{ menu.endpoint.info.id }}/versions">
+                <a href="endpoint/{{ menu.endpoint.info.id }}/versions" class="menu-link">
                     Per-Version Performance</a></li>
             <li ng-class="{'active': menu.page=='endpoint_user'}">
-                <a href="endpoint/{{ menu.endpoint.info.id }}/users">
+                <a href="endpoint/{{ menu.endpoint.info.id }}/users" class="menu-link">
                     Per-User Performance</a></li>
             <li ng-class="{'active': menu.page=='endpoint_profiler'}">
-                <a href="endpoint/{{ menu.endpoint.info.id }}/profiler">
+                <a href="endpoint/{{ menu.endpoint.info.id }}/profiler" class="menu-link">
                     Profiler</a></li>
             <li ng-class="{'active': menu.page=='endpoint_grouped_profiler'}">
-                <a href="endpoint/{{ menu.endpoint.info.id }}/grouped-profiler">
+                <a href="endpoint/{{ menu.endpoint.info.id }}/grouped-profiler" class="menu-link">
                     Grouped Profiler</a></li>
             <li ng-class="{'active': menu.page=='endpoint_outlier'}">
-                <a href="endpoint/{{ menu.endpoint.info.id }}/outliers">
+                <a href="endpoint/{{ menu.endpoint.info.id }}/outliers" class="menu-link">
                     Outliers</a></li>
-              <li ng-class="{'active': menu.page=='status_code_distribution'}">
-                <a href="endpoint/{{ menu.endpoint.info.id }}/status_code_distribution">Status Code Distribution</a>
+            <li ng-class="{'active': menu.page=='status_code_distribution'}">
+                <a href="endpoint/{{ menu.endpoint.info.id }}/status_code_distribution" class="menu-link">Status Code Distribution</a>
             </li>
         </ul>
     </li>
 
-    <li class="nav-item" title="Custom graphs" ng-show="menu.endpoint.customGraphs.length > 0">
-        <a class="nav-link nav-link-collapse collapsed"
-           data-toggle="collapse" data-target="#collapseCustomGraphs">
+    <li class="nav-item" ng-show="menu.endpoint.customGraphs.length > 0" title="Custom graphs">
+        <a class="nav-link nav-link-collapse collapsed" data-bs-target="#collapseCustomGraphs"
+           data-bs-toggle="collapse">
             <i class="fa fa-fw fa-desktop"></i>
             <span class="nav-link-text">Custom graphs</span>
         </a>
-        <ul class="sidenav-second-level collapse" id="collapseCustomGraphs">
-            <li ng-repeat="graph in menu.endpoint.customGraphs"
-                ng-class="{'active': menu.page=='custom_graph'+graph.graph_id}">
-                <a href="custom_graph/{{ graph.graph_id }}">{{ graph.title }}</a></li>
+        <ul class="navbar-nav collapse" id="collapseCustomGraphs">
+            <li class="nav-item" ng-class="{'active': menu.page=='custom_graph'+graph.graph_id}"
+                ng-repeat="graph in menu.endpoint.customGraphs">
+                <a class="nav-link" href="custom_graph/{{ graph.graph_id }}">{{ graph.title }}</a>
+            </li>
         </ul>
     </li>
 
-    <li ng-class="{'active': menu.page=='configuration'}" class="nav-item" title="Configuration">
+    <li class="nav-item" ng-class="{'active': menu.page=='configuration'}" title="Configuration">
         <a class="nav-link" href="configuration">
             <i class="fa fa-fw fa-gear"></i>
             <span class="nav-link-text">Configuration</span>

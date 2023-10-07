@@ -1,5 +1,5 @@
-from flask_monitoringdashboard.database import User, session_scope
 from flask_monitoringdashboard import config
+from flask_monitoringdashboard.database import User, session_scope
 
 
 def get_user(username, password):
@@ -26,9 +26,9 @@ def get_all_users(session):
 
     return [
         {
-            'id': user.id,
-            'username': user.username,
-            'is_admin': user.is_admin,
+            "id": user.id,
+            "username": user.username,
+            "is_admin": user.is_admin,
         }
         for user in users
     ]

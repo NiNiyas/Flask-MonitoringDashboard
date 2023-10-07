@@ -12,7 +12,7 @@ def get_rules(endpoint_name=None):
     return [
         r
         for r in rules
-        if not r.rule.startswith('/' + config.link)
-        and not r.rule.startswith('/static-' + config.link)
-        and not r.endpoint == 'static'
+        if not r.rule.startswith("/" + config.link)
+        and not r.rule.startswith("/static-" + config.link)
+        and not r.endpoint == "static"
     ]

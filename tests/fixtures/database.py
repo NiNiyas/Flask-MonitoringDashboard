@@ -19,4 +19,4 @@ class ModelFactory(SQLAlchemyModelFactory):
     class Meta:
         abstract = True
         sqlalchemy_session = scoped_session(DBSession)
-        sqlalchemy_session_persistence = 'commit'
+        sqlalchemy_session_persistence = "commit"

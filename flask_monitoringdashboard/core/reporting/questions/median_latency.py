@@ -11,15 +11,15 @@ from flask_monitoringdashboard.database.request import get_latencies_sample
 
 class MedianLatencyReportAnswer(ReportAnswer):
     def __init__(
-            self,
-            is_significant,
-            latencies_sample=None,
-            baseline_latencies_sample=None,
-            percentual_diff=None,
-            median=None,
-            baseline_median=None,
+        self,
+        is_significant,
+        latencies_sample=None,
+        baseline_latencies_sample=None,
+        percentual_diff=None,
+        median=None,
+        baseline_median=None,
     ):
-        super().__init__('MEDIAN_LATENCY')
+        super().__init__("MEDIAN_LATENCY")
 
         self._is_significant = is_significant
 
@@ -35,7 +35,7 @@ class MedianLatencyReportAnswer(ReportAnswer):
         return dict(
             latencies_samples=dict(
                 baseline=self._baseline_latencies_sample,
-                comparison=self._latencies_sample
+                comparison=self._latencies_sample,
             ),
             median=self._median,
             baseline_median=self._baseline_median,
@@ -49,8 +49,7 @@ class MedianLatencyReportAnswer(ReportAnswer):
 class MedianLatency(ReportQuestion):
     def get_answer(self, endpoint, requests_criterion, baseline_requests_criterion):
         with session_scope() as session:
-            latencies_sample = get_latencies_sample(session, endpoint.id,
-                                                    requests_criterion)
+            latencies_sample = get_latencies_sample(session, endpoint.id, requests_criterion)
             baseline_latencies_sample = get_latencies_sample(
                 session, endpoint.id, baseline_requests_criterion
             )

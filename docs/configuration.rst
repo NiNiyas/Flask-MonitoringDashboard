@@ -53,13 +53,15 @@ file that contains the entry point of the app. The following properties can be c
 .. code-block:: python
 
    [dashboard]
-   APP_VERSION=1.0
+   APP_VERSION=3.1.3
    GIT=/<path to your project>/.git/
    CUSTOM_LINK=dashboard
+   BLUEPRINT_NAME=dashboard
    MONITOR_LEVEL=3
    OUTLIER_DETECTION_CONSTANT=2.5
    SAMPLING_PERIOD=20
    ENABLE_LOGGING=True
+   DISABLE_CSRF_PROTECTION=False
    BRAND_NAME=Flask Monitoring Dashboard
    TITLE_NAME=Flask-MonitoringDashboard
    DESCRIPTION=Automatically monitor the evolving performance of Flask/Python web services
@@ -94,6 +96,9 @@ Dashboard
   the version is automatically retrieved by reading the commit-id (hashed value).
   The specified value is the location to the git-folder. This is relative to the configuration-file.
 
+- **BLUEPRINT_NAME:** The name of the blueprint the FMD adds to the Flask app. Default
+  value is dashboard.
+
 - **CUSTOM_LINK:** The Dashboard can be visited at localhost:5000/{{CUSTOM_LINK}}.
 
 - **MONITOR_LEVEL**: The level for monitoring your endpoints. The default value is 3. For more information, see the
@@ -106,6 +111,9 @@ Dashboard
   If this value is not set, the profiler monitors continuously.
 
 - **ENABLE_LOGGING:** Boolean if you want additional logs to be printed to the console. Default
+  value is False.
+
+- **DISABLE_CSRF_PROTECTION:** Boolean if you want to use the dashboard with Flask-WTF's CSRF protection. Default
   value is False.
 
 - **BRAND_NAME:** The name displayed in the Dashboard Navbar. Default value is 'Flask Monitoring Dashboard'.

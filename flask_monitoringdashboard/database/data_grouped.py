@@ -4,7 +4,7 @@ from flask_monitoringdashboard.database import Request
 
 
 def get_data_grouped(session, column, func, *where):
-    """ Return the data for a specific endpoint. The result is grouped on column
+    """Return the data for a specific endpoint. The result is grouped on column
     :param session: session for the database
     :param column: the column that is used for grouping
     :param func: the function to reduce the data
@@ -82,8 +82,6 @@ def get_two_columns_grouped(session, column, *where):
     :param column: column that is used for the grouping (together with the Request.version)
     :param where: additional where clause
     """
-    result = (
-        session.query(column, Request.version_requested, Request.duration).filter(*where).all()
-    )
+    result = session.query(column, Request.version_requested, Request.duration).filter(*where).all()
     result = [((g, v), t) for g, v, t in result]
     return group_result(result, median)

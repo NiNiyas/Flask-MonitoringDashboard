@@ -2,15 +2,16 @@ import datetime
 
 from flask import jsonify
 
-from flask_monitoringdashboard.controllers.requests import get_num_requests_data, get_hourly_load
+from flask_monitoringdashboard import blueprint
+from flask_monitoringdashboard.controllers.requests import (
+    get_num_requests_data,
+    get_hourly_load,
+)
+from flask_monitoringdashboard.core.auth import secure
 from flask_monitoringdashboard.database import session_scope
 
-from flask_monitoringdashboard.core.auth import secure
 
-from flask_monitoringdashboard import blueprint
-
-
-@blueprint.route('/api/requests/<start_date>/<end_date>')
+@blueprint.route("/api/requests/<start_date>/<end_date>")
 @secure
 def num_requests(start_date, end_date):
     """
@@ -21,15 +22,15 @@ def num_requests(start_date, end_date):
           'values': [list with an integer per day],
         }
     """
-    start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
-    end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
+    start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
+    end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
 
     with session_scope() as session:
         return jsonify(get_num_requests_data(session, start_date, end_date))
 
 
-@blueprint.route('/api/hourly_load/<start_date>/<end_date>')
-@blueprint.route('/api/hourly_load/<start_date>/<end_date>/<endpoint_id>')
+@blueprint.route("/api/hourly_load/<start_date>/<end_date>")
+@blueprint.route("/api/hourly_load/<start_date>/<end_date>/<endpoint_id>")
 @secure
 # both days must be in the form: yyyy-mm-dd
 def hourly_load(start_date, end_date, endpoint_id=None):
@@ -42,8 +43,8 @@ def hourly_load(start_date, end_date, endpoint_id=None):
           'days': ['start_date', 'start_date+1', ..., 'end_date'],
         }
     """
-    start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
-    end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
+    start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
+    end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
 
     with session_scope() as session:
         return jsonify(get_hourly_load(session, endpoint_id, start_date, end_date))

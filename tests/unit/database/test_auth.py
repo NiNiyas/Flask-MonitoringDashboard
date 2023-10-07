@@ -15,4 +15,4 @@ def test_get_user_adds_default(session, config):
 
 def test_get_user_returns_none(user):
     """Test that get_user returns None if the user cannot be found."""
-    assert get_user(username=user.username, password='1234') is None
+    assert get_user(username=user.username, password="1234") is None

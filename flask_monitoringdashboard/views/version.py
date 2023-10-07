@@ -13,8 +13,8 @@ from flask_monitoringdashboard import blueprint
 from flask_monitoringdashboard.database.versions import get_versions
 
 
-@blueprint.route('/api/versions')
-@blueprint.route('/api/versions/<endpoint_id>')
+@blueprint.route("/api/versions")
+@blueprint.route("/api/versions/<endpoint_id>")
 @secure
 def versions(endpoint_id=None):
     """
@@ -25,11 +25,11 @@ def versions(endpoint_id=None):
         version_dates = get_versions(session, endpoint_id)
         dicts = []
         for vt in version_dates:
-            dicts.append({'version': vt[0], 'date': vt[1]})
+            dicts.append({"version": vt[0], "date": vt[1]})
         return jsonify(dicts)
 
 
-@blueprint.route('/api/multi_version', methods=['POST'])
+@blueprint.route("/api/multi_version", methods=["POST"])
 @secure
 def multi_version():
     """
@@ -46,14 +46,14 @@ def multi_version():
             ]
           }
     """
-    data = json.loads(request.data)['data']
-    endpoints = data['endpoints']
-    versions = data['versions']
+    data = json.loads(request.data)["data"]
+    endpoints = data["endpoints"]
+    versions = data["versions"]
     with session_scope() as session:
         return jsonify(get_multi_version_data(session, endpoints, versions))
 
 
-@blueprint.route('/api/version_user/<endpoint_id>', methods=['POST'])
+@blueprint.route("/api/version_user/<endpoint_id>", methods=["POST"])
 @secure
 def version_user(endpoint_id):
     """
@@ -75,15 +75,15 @@ def version_user(endpoint_id):
             ]
           }
     """
-    data = json.loads(request.data)['data']
-    versions = data['versions']
-    users = data['users']
+    data = json.loads(request.data)["data"]
+    versions = data["versions"]
+    users = data["users"]
 
     with session_scope() as session:
         return jsonify(get_version_user_data(session, endpoint_id, versions, users))
 
 
-@blueprint.route('/api/version_ip/<endpoint_id>', methods=['POST'])
+@blueprint.route("/api/version_ip/<endpoint_id>", methods=["POST"])
 @secure
 def version_ip(endpoint_id):
     """
@@ -105,9 +105,9 @@ def version_ip(endpoint_id):
             ]
           }
     """
-    data = json.loads(request.data)['data']
-    versions = data['versions']
-    ips = data['ip']
+    data = json.loads(request.data)["data"]
+    versions = data["versions"]
+    ips = data["ip"]
 
     with session_scope() as session:
         return jsonify(get_version_ip_data(session, endpoint_id, versions, ips))

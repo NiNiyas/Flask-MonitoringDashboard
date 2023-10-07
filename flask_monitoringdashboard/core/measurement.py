@@ -44,7 +44,7 @@ def add_decorator(endpoint):
     elif endpoint.monitor_level == 3:
         add_wrapper3(endpoint, fun)
     else:
-        raise ValueError('Incorrect monitoringLevel')
+        raise ValueError("Incorrect monitoringLevel")
 
 
 def add_wrapper0(endpoint, fun):
@@ -84,7 +84,7 @@ def status_code_from_response(result):
     else:
         # Try to pull it from an object
         try:
-            status_code = getattr(result, 'status_code')
+            status_code = getattr(result, "status_code")
         except:
             pass
 

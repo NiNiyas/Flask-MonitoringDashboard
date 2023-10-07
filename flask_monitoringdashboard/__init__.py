@@ -22,11 +22,11 @@ from flask_monitoringdashboard.core.logger import log
 
 def loc():
     """Get the current location of the project."""
-    return os.path.abspath(os.path.dirname(__file__)) + '/'
+    return os.path.abspath(os.path.dirname(__file__)) + "/"
 
 
 config = Config()
-blueprint = Blueprint('dashboard', __name__, template_folder=loc() + 'templates')
+blueprint = Blueprint("dashboard", __name__, template_folder=loc() + "templates")
 
 
 def bind(app, schedule=True, include_dashboard=True):
@@ -36,13 +36,14 @@ def bind(app, schedule=True, include_dashboard=True):
     :param app: the app for which the performance has to be tracked
     :param schedule: flag telling if the background scheduler should be started
     :param include_dashboard: flag telling if the views should be added or not.
+    :param csrf: Enable CSRF protection via flask-wtf.
     """
     blueprint.name = config.blueprint_name
     config.app = app
     # Provide a secret-key for using WTF-forms
     if not app.secret_key:
-        log('WARNING: You should provide a security key.')
-        app.secret_key = 'my-secret-key'
+        log("WARNING: You should provide a secret key.")
+        app.secret_key = "my-secret-key"
 
     # Add all route-functions to the blueprint
     if include_dashboard:
@@ -70,7 +71,7 @@ def bind(app, schedule=True, include_dashboard=True):
         custom_graph.init(app)
 
     # register the blueprint to the app
-    app.register_blueprint(blueprint, url_prefix='/' + config.link)
+    app.register_blueprint(blueprint, url_prefix="/" + config.link)
 
     # flush cache to db before shutdown
     import atexit
@@ -79,6 +80,7 @@ def bind(app, schedule=True, include_dashboard=True):
     atexit.register(flush_cache)
 
     if not include_dashboard:
+
         @app.teardown_request
         def teardown(_):
             flush_cache()

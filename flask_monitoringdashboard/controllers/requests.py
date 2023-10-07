@@ -23,11 +23,11 @@ def get_num_requests_data(session, start_date, end_date):
     hits = count_requests_per_day(session, days)
     endpoints = get_endpoints(session)
     data = [
-        {'name': end.name, 'values': [get_value(hits_day, end.id) for hits_day in hits]}
+        {"name": end.name, "values": [get_value(hits_day, end.id) for hits_day in hits]}
         for end in endpoints
     ]
 
-    return {'days': [d.strftime('%Y-%m-%d') for d in days], 'data': data}
+    return {"days": [d.strftime("%Y-%m-%d") for d in days], "data": data}
 
 
 def get_all_request_status_code_counts(session, endpoint_id):
@@ -40,9 +40,9 @@ def get_all_request_status_code_counts(session, endpoint_id):
     """
     return (
         session.query(Request.status_code, func.count(Request.status_code))
-            .filter(Request.endpoint_id == endpoint_id, Request.status_code.isnot(None))
-            .group_by(Request.status_code)
-            .all()
+        .filter(Request.endpoint_id == endpoint_id, Request.status_code.isnot(None))
+        .group_by(Request.status_code)
+        .all()
     )
 
 
@@ -75,9 +75,12 @@ def get_status_code_frequencies(session, endpoint_id, *criterion):
     code. Example: a return value of `{ 200: 105, 404: 3 }` means that status code 200 was returned 105 times and
     404 was returned 3 times.
     """
-    status_code_counts = session.query(Request.status_code, func.count(Request.status_code)) \
-        .filter(Request.endpoint_id == endpoint_id, Request.status_code.isnot(None), *criterion) \
-        .group_by(Request.status_code).all()
+    status_code_counts = (
+        session.query(Request.status_code, func.count(Request.status_code))
+        .filter(Request.endpoint_id == endpoint_id, Request.status_code.isnot(None), *criterion)
+        .group_by(Request.status_code)
+        .all()
+    )
 
     return dict(status_code_counts)
 
@@ -116,7 +119,7 @@ def get_hourly_load(session, endpoint_id, start_date, end_date):
     numdays = (end_date - start_date).days + 1
 
     # list of hours: 0:00 - 23:00
-    hours = ['0{}:00'.format(h) for h in range(0, 10)] + ['{}:00'.format(h) for h in range(10, 24)]
+    hours = ["0{}:00".format(h) for h in range(0, 10)] + ["{}:00".format(h) for h in range(10, 24)]
     heatmap_data = numpy.zeros((len(hours), numdays))
 
     start_datetime = to_utc_datetime(
@@ -125,13 +128,13 @@ def get_hourly_load(session, endpoint_id, start_date, end_date):
     end_datetime = to_utc_datetime(datetime.datetime.combine(end_date, datetime.time(23, 59, 59)))
 
     for time, count in get_num_requests(session, endpoint_id, start_datetime, end_datetime):
-        parsed_time = datetime.datetime.strptime(time, '%Y-%m-%d %H:%M:%S')
+        parsed_time = datetime.datetime.strptime(time, "%Y-%m-%d %H:%M:%S")
         day_index = (parsed_time - start_datetime).days
-        hour_index = int(to_local_datetime(parsed_time).strftime('%H'))
+        hour_index = int(to_local_datetime(parsed_time).strftime("%H"))
         heatmap_data[hour_index][day_index] = count
     return {
-        'days': [
-            (start_date + datetime.timedelta(days=i)).strftime('%Y-%m-%d') for i in range(numdays)
+        "days": [
+            (start_date + datetime.timedelta(days=i)).strftime("%Y-%m-%d") for i in range(numdays)
         ],
         "data": heatmap_data.tolist(),
     }

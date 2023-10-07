@@ -29,7 +29,7 @@ export function ConfigurationController($scope, $http, menuService, endpointServ
 
     $scope.openModal = function(name, user){
         $scope.user = user;
-        $(`#${name}Modal`).modal();
+        $(`#${name}Modal`).modal('show');
     }
 
     function fetchUsers(){

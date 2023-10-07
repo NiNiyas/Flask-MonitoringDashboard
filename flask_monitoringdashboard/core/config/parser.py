@@ -15,15 +15,15 @@ def parse_version(parser, header, version):
     :param header: name of the header in the configuration file
     :param version: the default version
     """
-    version = parse_string(parser, header, 'APP_VERSION', version)
-    if parser.has_option(header, 'GIT'):
-        git = parser.get(header, 'GIT')
+    version = parse_string(parser, header, "APP_VERSION", version)
+    if parser.has_option(header, "GIT"):
+        git = parser.get(header, "GIT")
         try:
             # current hash can be found in the link in HEAD-file in git-folder
             # The file is specified by: 'ref: <location>'
-            git_head = os.path.join(git, 'HEAD')
+            git_head = os.path.join(git, "HEAD")
             if os.path.isfile(git_head):
-                git_file = (open(git_head).read().rsplit(': ', 1)[1]).rstrip()
+                git_file = (open(git_head).read().rsplit(": ", 1)[1]).rstrip()
                 # read the git-version
                 version_file = os.path.join(git, git_file)
                 if os.path.exists(version_file):
@@ -68,7 +68,7 @@ def parse_bool(parser, header, arg_name, arg_value):
     env = get_environment_var(arg_name)
     arg_value = env if env else arg_value
     if parser.has_option(header, arg_name):
-        return parser.get(header, arg_name) == 'True'
+        return parser.get(header, arg_name) == "True"
     return arg_value
 
 

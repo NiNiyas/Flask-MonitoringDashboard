@@ -45,9 +45,9 @@ def count_requests_group(session, *where):
 
 
 def count_requests_per_day(session, list_of_days):
-    """ Return the number of hits for all endpoints per day.
+    """Return the number of hits for all endpoints per day.
     :param session: session for the database
-    :param list_of_days: list with datetime.datetime objects. """
+    :param list_of_days: list with datetime.datetime objects."""
     result = []
     for day in list_of_days:
         dt_begin = to_utc_datetime(datetime.datetime.combine(day, datetime.time(0, 0, 0)))

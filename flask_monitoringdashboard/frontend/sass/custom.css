@@ -40,7 +40,7 @@ tr.even:hover, tr.odd:hover {
 #mainNav .navbar-collapse .navbar-sidenav .nav-link-collapse:after {
     float: right;
     content: '\f107';
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 6 Free';
 }
 
 #mainNav .navbar-collapse .navbar-sidenav .nav-link-collapse.collapsed:after {
@@ -86,7 +86,7 @@ tr.even:hover, tr.odd:hover {
     width: auto;
     content: '\f105';
     border: none;
-    font-family: 'FontAwesome';
+    font-family: 'fontawesome-webfont';
 }
 
 #mainNav .navbar-collapse .navbar-nav > .nav-item.dropdown > .nav-link .indicator {
@@ -513,4 +513,34 @@ footer.sticky-footer {
     .container {
         max-width: 1600px !important;
     }
+}
+::-webkit-scrollbar-corner {
+	background: rgba(0, 0, 0, 0.5);
+}
+
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--scroll-bar-color) var(--scroll-bar-bg-color);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+	width: 12px;
+	height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+	background: var(--scroll-bar-bg-color);
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: var(--scroll-bar-color);
+	border-radius: 20px;
+	border: 3px solid var(--scroll-bar-bg-color);
+}
+.menu-link {
+    text-decoration: none;
+}
+.darkmode-layer, .darkmode-toggle {
+      z-index: 500;
 }

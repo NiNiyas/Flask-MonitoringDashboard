@@ -38,7 +38,7 @@ def group_request_times(datetimes):
     """
     hours_dict = defaultdict(int)
     for dt in datetimes:
-        round_time = dt.strftime('%Y-%m-%d %H:00:00')
+        round_time = dt.strftime("%Y-%m-%d %H:00:00")
         hours_dict[round_time] += 1
     return hours_dict.items()
 
@@ -150,7 +150,7 @@ def update_last_requested(session, endpoint_name, timestamp=None):
     :param endpoint_name: name of the endpoint
     :param timestamp: optional timestamp. If not given, timestamp is current time
     """
-    ts = timestamp if timestamp else datetime.datetime.utcnow()
+    ts = timestamp if timestamp else datetime.datetime.now(datetime.UTC)
     session.query(Endpoint).filter(Endpoint.name == endpoint_name).update(
         {Endpoint.last_requested: ts}
     )
@@ -186,14 +186,14 @@ def get_endpoints_hits(session):
 
 
 def get_avg_duration(session, endpoint_id):
-    """ Returns the average duration of all the requests of an endpoint. If there are no requests
+    """Returns the average duration of all the requests of an endpoint. If there are no requests
         for that endpoint, it returns 0.
     :param session: session for the database
     :param endpoint_id: id of the endpoint
     :return average duration
     """
     result = (
-        session.query(func.avg(Request.duration).label('average'))
+        session.query(func.avg(Request.duration).label("average"))
         .filter(Request.endpoint_id == endpoint_id)
         .one()
     )
@@ -203,13 +203,13 @@ def get_avg_duration(session, endpoint_id):
 
 
 def get_endpoint_averages(session):
-    """ Returns the average duration of all endpoints. If there are no requests for an endpoint,
+    """Returns the average duration of all endpoints. If there are no requests for an endpoint,
         the average will be none.
     :param session: session for the database
     :return tuple of (endpoint_name, avg_duration)
     """
     result = (
-        session.query(Endpoint.name, func.avg(Request.duration).label('average'))
+        session.query(Endpoint.name, func.avg(Request.duration).label("average"))
         .outerjoin(Request)
         .group_by(Endpoint.name)
         .all()

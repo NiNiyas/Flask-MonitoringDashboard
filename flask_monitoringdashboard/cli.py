@@ -7,6 +7,8 @@ For a list of all commands, open a terminal and type:
 import click
 from flask.cli import with_appcontext
 
+from flask_monitoringdashboard import log
+
 
 @click.group()
 def fmd():
@@ -19,4 +21,4 @@ def init_db():
     # Importing the database package is enough
     import flask_monitoringdashboard.database
 
-    print('Flask-MonitoringDashboard database has been created')
+    log("Flask-MonitoringDashboard database has been created")

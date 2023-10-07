@@ -1,9 +1,24 @@
-Change Log
+Changelog
 =========================================================================
 
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 Please note that the changes before version 1.10.0 have not been documented.
+
+v3.1.3
+----------
+- Migrated to Bootstrap 5
+- Updated frontend dependencies
+- Added new config setting to enable/disable CSRF protection
+- Added support for Python 3.12
+- Added dark mode
+- Updated docs
+- New docs theme
+- A simple Makefile to build the frontend
+- Most of the pages are responsive
+- Removed Python 2 support
+- Removed demo link from readme
+- Removed deprecated functions
 
 v3.1.2
 ----------

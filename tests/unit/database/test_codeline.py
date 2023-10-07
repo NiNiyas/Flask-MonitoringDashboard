@@ -7,10 +7,10 @@ import pytest
 from flask_monitoringdashboard.database.code_line import get_code_line
 
 
-@pytest.mark.parametrize('filename', ['filename'])
-@pytest.mark.parametrize('line_number', [42])
-@pytest.mark.parametrize('function', ['f'])
-@pytest.mark.parametrize('code', ['x = 5'])
+@pytest.mark.parametrize("filename", ["filename"])
+@pytest.mark.parametrize("line_number", [42])
+@pytest.mark.parametrize("function", ["f"])
+@pytest.mark.parametrize("code", ["x = 5"])
 def test_get_code_line(session, filename, line_number, function, code):
     code_line1 = get_code_line(session, filename, line_number, function, code)
     code_line2 = get_code_line(session, filename, line_number, function, code)

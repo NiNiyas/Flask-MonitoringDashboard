@@ -1,3 +1,4 @@
+from flask import flash
 from functools import wraps
 
 from flask import session, redirect, url_for
@@ -16,10 +17,10 @@ def admin_secure(func):
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        if session and session.get(config.link + '_logged_in'):
-            if session.get(config.link + '_admin'):
+        if session and session.get(config.link + "_logged_in"):
+            if session.get(config.link + "_admin"):
                 return func(*args, **kwargs)
-        return redirect(url_for(config.blueprint_name + '.login'))
+        return redirect(url_for(config.blueprint_name + ".login"))
 
     return wrapper
 
@@ -35,25 +36,26 @@ def secure(func):
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        if session and session.get(config.link + '_logged_in'):
+        if session and session.get(config.link + "_logged_in"):
             return func(*args, **kwargs)
-        return redirect(url_for(config.blueprint_name + '.login'))
+        return redirect(url_for(config.blueprint_name + ".login"))
 
     return wrapper
 
 
 def is_admin():
-    return session and session.get(config.link + '_admin')
+    return session and session.get(config.link + "_admin")
 
 
 def on_login(user):
-    session[config.link + '_user_id'] = user.id
-    session[config.link + '_logged_in'] = True
+    session[config.link + "_user_id"] = user.id
+    session[config.link + "_logged_in"] = True
     if user.is_admin:
-        session[config.link + '_admin'] = True
+        session[config.link + "_admin"] = True
 
 
 def on_logout():
-    session.pop(config.link + '_logged_in', None)
-    session.pop(config.link + '_admin', None)
-    return redirect(url_for(config.blueprint_name + '.login'))
+    session.pop(config.link + "_logged_in", None)
+    session.pop(config.link + "_admin", None)
+    flash("Successfully logged out.", "success")
+    return redirect(url_for(config.blueprint_name + ".login"))

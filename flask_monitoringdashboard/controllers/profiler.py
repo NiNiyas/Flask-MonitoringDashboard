@@ -26,9 +26,9 @@ def get_profiler_table(session, endpoint_id, offset, per_page):
         stack_lines = []
         for line in row.stack_lines:
             obj = row2dict(line)
-            obj['code'] = row2dict(line.code)
+            obj["code"] = row2dict(line.code)
             stack_lines.append(obj)
-        table[idx]['stack_lines'] = stack_lines
+        table[idx]["stack_lines"] = stack_lines
     return table
 
 
@@ -53,12 +53,12 @@ def get_grouped_profiler(session, endpoint_id):
     for key, duration_list in sorted(histogram.items(), key=lambda row: row[0]):
         table.append(
             {
-                'indent': path_hash.get_indent(key) - 1,
-                'code': path_hash.get_code(key),
-                'hits': len(duration_list),
-                'duration': sum(duration_list),
-                'std': numpy.std(duration_list),
-                'total_hits': len(requests),
+                "indent": path_hash.get_indent(key) - 1,
+                "code": path_hash.get_code(key),
+                "hits": len(duration_list),
+                "duration": sum(duration_list),
+                "std": numpy.std(duration_list),
+                "total_hits": len(requests),
             }
         )
     return table

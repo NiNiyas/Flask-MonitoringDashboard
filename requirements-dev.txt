@@ -7,3 +7,4 @@ pytest
 pytest-factoryboy
 pytest-cov
 flake8
+black

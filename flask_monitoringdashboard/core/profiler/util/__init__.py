@@ -1,7 +1,7 @@
 from flask_monitoringdashboard.core.profiler.util.path_hash import PathHash
 
 
-def order_histogram(items, path=''):
+def order_histogram(items, path=""):
     """
     Finds the order of self._text_dict and assigns this order to self._lines_body
     :param items: list of key, value. Obtained by histogram.items()

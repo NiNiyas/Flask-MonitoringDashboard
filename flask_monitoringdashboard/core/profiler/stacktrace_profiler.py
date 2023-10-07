@@ -14,7 +14,7 @@ from flask_monitoringdashboard.database import session_scope
 from flask_monitoringdashboard.database.request import add_request
 from flask_monitoringdashboard.database.stack_line import add_stack_line
 
-FILENAME = 'flask_monitoringdashboard/core/measurement.py'
+FILENAME = "flask_monitoringdashboard/core/measurement.py"
 FILENAME_LEN = len(FILENAME)
 
 
@@ -55,12 +55,12 @@ class StacktraceProfiler(threading.Thread):
             try:
                 frame = sys._current_frames()[self._thread_to_monitor]
             except KeyError:
-                log('Can\'t get the stacktrace of the main thread. Stopping StacktraceProfiler')
-                log('Thread to monitor: %s' % self._thread_to_monitor)
-                log('Running threads: %s' % sys._current_frames().keys())
+                log("Can't get the stacktrace of the main thread. Stopping StacktraceProfiler")
+                log("Thread to monitor: %s" % self._thread_to_monitor)
+                log("Running threads: %s" % sys._current_frames().keys())
                 break
             in_endpoint_code = False
-            self._path_hash.set_path('')
+            self._path_hash.set_path("")
             # filename, line number, function name, source code line
             for fn, ln, fun, line in traceback.extract_stack(frame):
                 if self._endpoint.name == fun:
@@ -136,14 +136,14 @@ class StacktraceProfiler(threading.Thread):
             fun = config.app.view_functions[self._endpoint.name]
         except AttributeError:
             fun = None
-        if hasattr(fun, 'original'):
+        if hasattr(fun, "original"):
             original = fun.original
             fn = inspect.getfile(original)
             lines, ln = inspect.getsourcelines(original)
             count = 0
             for line in lines:
-                lines_returned.append((fn, ln + count, 'None', line.strip()))
+                lines_returned.append((fn, ln + count, "None", line.strip()))
                 count += 1
-                if line.strip()[:4] == 'def ':
+                if line.strip()[:4] == "def ":
                     return lines_returned
-        raise ValueError('Cannot retrieve the function header')
+        raise ValueError("Cannot retrieve the function header")

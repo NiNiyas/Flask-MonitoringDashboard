@@ -65,12 +65,12 @@ def get_grouped_profiled_requests(session, endpoint_id):
     of the tuple is a list of StackLine-objects.
     """
     t = (
-        session.query(distinct(StackLine.request_id).label('id'))
+        session.query(distinct(StackLine.request_id).label("id"))
         .filter(Request.endpoint_id == endpoint_id)
         .join(Request.stack_lines)
         .order_by(StackLine.request_id.desc())
         .limit(100)
-        .subquery('t')
+        .subquery("t")
     )
     # Limit the number of results by 100, otherwise the profiler gets too large
     # and the page doesn't load anymore. We show the most recent 100 requests.

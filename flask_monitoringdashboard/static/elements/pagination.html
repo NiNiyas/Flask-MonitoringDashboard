@@ -1,22 +1,21 @@
 <div class="row" ng-show="pagination.total > 0">
     <div class="col-sm-6">
-        Displaying <strong>{{ pagination.getLeft() + 1 }}
-        - {{ pagination.getRight() }}</strong> {{ pagination.name }}: <strong>{{ pagination.total | number }}</strong> in total
+        Displaying <strong>{{ pagination.getLeft() + 1 }} - {{ pagination.getRight() }}</strong> {{ pagination.name }}:
+        <strong>{{ pagination.total | number }}</strong> in total
     </div>
     <div class="col-sm-6">
-        <ul class="pagination" style="float: right;">
-            <li class="paginate_button page-item previous"
-                ng-class="{'disabled': pagination.page == pagination.getFirstPage()}">
-                <a href="#" class="page-link" ng-click="pagination.goto(pagination.page-1)">Previous</a>
+        <ul class="pagination justify-content-end">
+            <li class="page-item" ng-class="{'disabled': pagination.page == pagination.getFirstPage()}">
+                <a class="page-link" href="#" ng-click="pagination.goto(pagination.page-1)">Previous</a>
             </li>
-            <li ng-repeat="p in pagination.getPages() track by $index" class="paginate_button page-item"
-                ng-class="{'active': pagination.page==p, 'disabled': p=='...'}">
-                <a href="#" class="page-link" ng-click="pagination.goto(p)">{{ p }}</a>
+            <li class="page-item" ng-class="{'active': pagination.page==p, 'disabled': p=='...'}"
+                ng-repeat="p in pagination.getPages() track by $index">
+                <a class="page-link" href="#" ng-click="pagination.goto(p)">{{ p }}</a>
             </li>
-            <li class="paginate_button page-item next"
-                ng-class="{'disabled': pagination.page == pagination.getLastPage()}">
-                <a href="#" class="page-link" ng-click="pagination.goto(pagination.page+1)">Next</a>
+            <li class="page-item" ng-class="{'disabled': pagination.page == pagination.getLastPage()}">
+                <a class="page-link" href="#" ng-click="pagination.goto(pagination.page+1)">Next</a>
             </li>
         </ul>
+
     </div>
 </div>

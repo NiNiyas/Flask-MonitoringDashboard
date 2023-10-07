@@ -23,8 +23,8 @@ def recursive_group_by(argument):
     # Try if the argument is iterable (i.e. tuple or list)
     try:
         result_list = [recursive_group_by(i) for i in argument]
-        result_string = ','.join(result_list)
-        return '({})'.format(result_string)
+        result_string = ",".join(result_list)
+        return "({})".format(result_string)
     except TypeError:
         # Cannot deal with this
         return str(argument)
@@ -39,5 +39,5 @@ def get_group_by():
         if config.group_by:
             group_by = recursive_group_by(config.group_by)
     except Exception as e:
-        log('Can\'t execute group_by function: {}'.format(e))
+        log("Can't execute group_by function: {}".format(e))
     return str(group_by)

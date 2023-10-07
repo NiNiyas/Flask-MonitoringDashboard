@@ -1,6 +1,8 @@
 <div>
     <div class="card mb-3">
-        <div class="card-header"><h4>{{ title }}</h4></div>
+        <div class="card-header">
+            <h4>{{ title }}</h4>
+        </div>
         <div class="card-body">
             <div id="chart">
                 <div class="spinner" ng-controller="FormController" ng-show="handler.isLoading">
@@ -15,39 +17,51 @@
     </div>
 
     <div class="row">
-        <div class="col-7">
-            <div class="card">
-                <div class="card-header"><h6>Graph options</h6></div>
+        <div class="col-md-7">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h6 class="card-title">Graph options</h6>
+                </div>
                 <div class="card-body" ng-controller="FormController">
                     <form>
-                        <div class="form-group row" ng-repeat="item in handler.dateFields">
-                            <label for="{{ item.name }}" class="col-sm-2 col-form-label">{{ item.name }}</label>
-                            <div class="col-sm-10">
-                                <input type="date" class="form-control" id="{{ item.name }}" ng-model="item.value">
+                        <div class="row g-3" ng-repeat="item in handler.dateFields">
+                            <div class="col-sm-4">
+                                <label class="col-form-label" for="{{ item.name }}">{{ item.name }}</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="{{ item.name }}" ng-model="item.value" type="date">
                             </div>
                         </div>
                         <div class="form-group" ng-repeat="item in handler.multiFields">
-                            <label for="{{ item.name }}" class="col-form-label">Select the {{ item.name }}
-                                (hold Shift or Cmd/Ctrl to select multiple): </label>
-                            <select multiple class="form-control" id="{{ item.name }}" ng-model="item.selected"
+                            <label class="form-label" for="{{ item.name }}">Select the {{ item.name }} (hold Shift or
+                                Cmd/Ctrl to select multiple):</label>
+                            <select class="form-control" id="{{ item.name }}" multiple ng-model="item.selected"
                                     ng-options="obj.text for obj in item.values track by obj.id"
                                     size="{{ item.values.length < 10 ? item.values.length : 10 }}"></select>
                         </div>
-                        <button type="submit" class="btn btn-primary" ng-click="handler.reload()">Update</button>
+                        <button class="mt-3 btn btn-primary" ng-click="handler.reload()" type="submit">Update</button>
                     </form>
                 </div>
             </div>
         </div>
-        <div class="col-5" style="float: right">
+        <div class="col-md-5">
             <div class="card">
-                <div class="card-header"><h6>Information</h6></div>
+                <div class="card-header">
+                    <h6 class="card-title">Information</h6>
+                </div>
                 <div class="card-body" ng-controller="InfoController">
-                    <b>Graph</b>
-                    <p> {{ info.graphText }}</p>
-                    <b>Axes</b>
-                    <p>{{ info.axesText }}</p>
-                    <b>Content</b>
-                    <p>{{ info.contentText }}</p>
+                    <div class="mb-3">
+                        <b>Graph</b>
+                        <p>{{ info.graphText }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <b>Axes</b>
+                        <p>{{ info.axesText }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <b>Content</b>
+                        <p>{{ info.contentText }}</p>
+                    </div>
                 </div>
             </div>
         </div>

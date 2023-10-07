@@ -1,5 +1,6 @@
-from flask_monitoringdashboard.controllers.requests import \
-    get_status_code_frequencies_in_interval
+from flask_monitoringdashboard.controllers.requests import (
+    get_status_code_frequencies_in_interval,
+)
 from flask_monitoringdashboard.core.reporting.questions.report_question import (
     ReportAnswer,
     ReportQuestion,
@@ -9,7 +10,7 @@ from flask_monitoringdashboard.database import session_scope
 
 class StatusCodeDistributionReportAnswer(ReportAnswer):
     def __init__(self, is_significant=False, percentages=None):
-        super().__init__('STATUS_CODE_DISTRIBUTION')
+        super().__init__("STATUS_CODE_DISTRIBUTION")
 
         self.percentages = percentages
         self._is_significant = is_significant
@@ -23,7 +24,7 @@ class StatusCodeDistributionReportAnswer(ReportAnswer):
 
 def frequency_to_percentage(freq, total):
     if total == 0:
-        raise ValueError('`total` can not be zero!')
+        raise ValueError("`total` can not be zero!")
 
     return (float(freq)) / total * 100
 
@@ -33,21 +34,17 @@ class StatusCodeDistribution(ReportQuestion):
     MIN_PERCENTAGE_DIFF_THRESHOLD = 3
 
     def get_answer(self, endpoint, requests_criterion, baseline_requests_criterion):
-
         with session_scope() as session:
-
-            frequencies = get_status_code_frequencies_in_interval(session, endpoint.id,
-                                                                  requests_criterion)
+            frequencies = get_status_code_frequencies_in_interval(
+                session, endpoint.id, requests_criterion
+            )
 
             baseline_frequencies = get_status_code_frequencies_in_interval(
-                session,
-                endpoint.id,
-                baseline_requests_criterion
+                session, endpoint.id, baseline_requests_criterion
             )
 
         # all monitored status codes in both intervals
-        all_monitored_status_codes = set(baseline_frequencies.keys()).union(
-            set(frequencies.keys()))
+        all_monitored_status_codes = set(baseline_frequencies.keys()).union(set(frequencies.keys()))
 
         total_requests = sum(frequencies.values())
         total_baseline_requests = sum(baseline_frequencies.values())

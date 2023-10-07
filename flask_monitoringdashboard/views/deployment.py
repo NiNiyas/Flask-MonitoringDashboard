@@ -9,7 +9,7 @@ from flask_monitoringdashboard.core.utils import get_details
 from flask_monitoringdashboard.database import session_scope
 
 
-@blueprint.route('/api/deploy_details')
+@blueprint.route("/api/deploy_details")
 @secure
 def deploy_details():
     """
@@ -17,16 +17,21 @@ def deploy_details():
     """
     with session_scope() as session:
         details = get_details(session)
-    details['first-request'] = to_local_datetime(
-        datetime.datetime.fromtimestamp(details['first-request'])
-    )
-    details['first-request-version'] = to_local_datetime(
-        datetime.datetime.fromtimestamp(details['first-request-version'])
-    )
+
+    try:
+        details["first-request"] = to_local_datetime(
+            datetime.datetime.fromtimestamp(details["first-request"])
+        )
+        details["first-request-version"] = to_local_datetime(
+            datetime.datetime.fromtimestamp(details["first-request-version"])
+        )
+    except:
+        pass
+
     return jsonify(details)
 
 
-@blueprint.route('/api/deploy_config')
+@blueprint.route("/api/deploy_config")
 @secure
 def deploy_config():
     """
@@ -34,9 +39,9 @@ def deploy_config():
     """
     return jsonify(
         {
-            'database_name': config.database_name,
-            'outlier_detection_constant': config.outlier_detection_constant,
-            'timezone': str(config.timezone),
-            'colors': config.colors,
+            "database_name": config.database_name,
+            "outlier_detection_constant": config.outlier_detection_constant,
+            "timezone": str(config.timezone),
+            "colors": config.colors,
         }
     )
