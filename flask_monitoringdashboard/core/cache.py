@@ -36,9 +36,9 @@ class EndpointInfo(object):
 
     def set_duration(self, duration):
         with mutex:
-            self.average_duration = (self.average_duration * self.hits + duration) / float(
-                self.hits + 1
-            )
+            self.average_duration = (
+                self.average_duration * self.hits + duration
+            ) / float(self.hits + 1)
             self.hits += 1
 
     def get_duration(self):
@@ -69,7 +69,7 @@ def update_last_requested_cache(endpoint_name):
     Use this instead of updating the last requested to the database.
     """
     global memory_cache
-    memory_cache.get(endpoint_name).set_last_requested(datetime.datetime.now(datetime.UTC))
+    memory_cache.get(endpoint_name).set_last_requested(datetime.datetime.now())
 
 
 def update_duration_cache(endpoint_name, duration):
@@ -77,7 +77,7 @@ def update_duration_cache(endpoint_name, duration):
     Use this together with adding a request to the database.
     """
     global memory_cache
-    memory_cache.get(endpoint_name).set_last_requested(datetime.datetime.now(datetime.UTC))
+    memory_cache.get(endpoint_name).set_last_requested(datetime.datetime.now())
     memory_cache.get(endpoint_name).set_duration(duration)
 
 
@@ -110,4 +110,6 @@ def flush_cache():
     with session_scope() as session:
         for endpoint_name, endpoint_info in memory_cache.items():
             if endpoint_info.last_requested:
-                update_last_requested(session, endpoint_name, endpoint_info.last_requested)
+                update_last_requested(
+                    session, endpoint_name, endpoint_info.last_requested
+                )

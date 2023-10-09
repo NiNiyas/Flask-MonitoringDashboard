@@ -69,7 +69,7 @@ class Endpoint(Base):
     monitor_level = Column(Integer, default=config.monitor_level)
     """0 - disabled, 1 - performance, 2 - outliers, 3 - profiler + outliers"""
 
-    time_added = Column(DateTime, default=datetime.datetime.now(datetime.UTC))
+    time_added = Column(DateTime, default=datetime.datetime.now())
     """Time when the endpoint was added."""
 
     version_added = Column(String(100), default=config.version)
@@ -93,7 +93,7 @@ class Request(Base):
     duration = Column(Float, nullable=False)
     """Processing time of the request in milliseconds."""
 
-    time_requested = Column(DateTime, default=datetime.datetime.now(datetime.UTC))
+    time_requested = Column(DateTime, default=datetime.datetime.now())
     """Moment when the request was handled."""
 
     version_requested = Column(String(100), default=config.version)
@@ -196,7 +196,7 @@ class CustomGraph(Base):
     title = Column(String(250), nullable=False, unique=True)
     """Title of this graph."""
 
-    time_added = Column(DateTime, default=datetime.datetime.now(datetime.UTC))
+    time_added = Column(DateTime, default=datetime.datetime.now())
     """When the graph was first added to the dashboard."""
 
     version_added = Column(String(100), default=config.version)
@@ -214,7 +214,7 @@ class CustomGraphData(Base):
     graph = relationship(CustomGraph, backref="data")
     """Graph for which the data is collected."""
 
-    time = Column(DateTime, default=datetime.datetime.now(datetime.UTC))
+    time = Column(DateTime, default=datetime.datetime.now())
     """Moment when the data is collected."""
 
     value = Column(Float)
@@ -246,7 +246,7 @@ def session_scope():
         session.commit()
     except Exception as e:
         session.rollback()
-        log("no commit has been made, due to the following error: {}".format(e))
+        log(f"No commit has been made, due to the following error: {e}")
     finally:
         session.close()
 

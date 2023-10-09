@@ -11,7 +11,10 @@ from flask_monitoringdashboard.core.measurement import add_decorator
 from flask_monitoringdashboard.core.timezone import to_local_datetime, to_utc_datetime
 from flask_monitoringdashboard.core.utils import simplify
 from flask_monitoringdashboard.database import Request
-from flask_monitoringdashboard.database.count_group import count_requests_group, get_value
+from flask_monitoringdashboard.database.count_group import (
+    count_requests_group,
+    get_value,
+)
 from flask_monitoringdashboard.database.data_grouped import (
     get_endpoint_data_grouped,
     get_user_data_grouped,
@@ -31,8 +34,8 @@ def get_endpoint_overview(session):
     :param session: session for the database
     :return: A list of properties for each endpoint that is found in the database
     """
-    week_ago = datetime.datetime.now(datetime.UTC) - datetime.timedelta(days=7)
-    now_local = to_local_datetime(datetime.datetime.now(datetime.UTC))
+    week_ago = datetime.datetime.now() - datetime.timedelta(days=7)
+    now_local = to_local_datetime(datetime.datetime.now())
     today_local = now_local.replace(hour=0, minute=0, second=0, microsecond=0)
     today_utc = to_utc_datetime(today_local)
 
@@ -52,8 +55,12 @@ def get_endpoint_overview(session):
 
     hits = count_requests_group(session)
 
-    median_today = get_endpoint_data_grouped(session, median, Request.time_requested > today_utc)
-    median_week = get_endpoint_data_grouped(session, median, Request.time_requested > week_ago)
+    median_today = get_endpoint_data_grouped(
+        session, median, Request.time_requested > today_utc
+    )
+    median_week = get_endpoint_data_grouped(
+        session, median, Request.time_requested > week_ago
+    )
     median_overall = get_endpoint_data_grouped(session, median)
     access_times = get_last_requested(session)
 
@@ -131,7 +138,8 @@ def get_api_performance(session, endpoints):
     db_endpoints = [get_endpoint_by_name(session, end) for end in endpoints]
     data = get_endpoint_data_grouped(session, lambda x: simplify(x, 10))
     return [
-        {"name": end.name, "values": get_value(data, end.id, default=[])} for end in db_endpoints
+        {"name": end.name, "values": get_value(data, end.id, default=[])}
+        for end in db_endpoints
     ]
 
 

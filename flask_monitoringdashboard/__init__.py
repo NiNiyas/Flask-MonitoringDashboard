@@ -36,7 +36,6 @@ def bind(app, schedule=True, include_dashboard=True):
     :param app: the app for which the performance has to be tracked
     :param schedule: flag telling if the background scheduler should be started
     :param include_dashboard: flag telling if the views should be added or not.
-    :param csrf: Enable CSRF protection via flask-wtf.
     """
     blueprint.name = config.blueprint_name
     config.app = app
