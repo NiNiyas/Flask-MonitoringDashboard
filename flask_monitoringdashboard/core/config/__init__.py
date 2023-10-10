@@ -135,7 +135,7 @@ class Config(object):
         if envvar:
             file = os.getenv(envvar)
             if log_verbose:
-                log("Running with config from: " + (str(file)))
+                log(f"Running with config from: {(str(file))}")
 
         if not file:
             # Travis does not need a config file.
@@ -217,9 +217,5 @@ class Config(object):
             self.timezone = pytz.timezone(
                 parse_string(parser, "visualization", "TIMEZONE", self.timezone.zone)
             )
-
-            if log_verbose:
-                log("version: " + self.version)
-                log("username: " + self.username)
         except AttributeError:
             raise

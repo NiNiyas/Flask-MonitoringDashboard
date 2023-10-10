@@ -32,7 +32,7 @@ def parse_version(parser, header, version):
                     return version[:6]
             else:
                 # Return "dummy" version in case of no git version file found
-                log("Folder {} not found, using dummy version: {}".format(git_head, version))
+                log(f"Folder {git_head} not found, using dummy version: {version}")
                 return version
         except IOError:
             log("Error reading one of the files to retrieve the current git-version.")

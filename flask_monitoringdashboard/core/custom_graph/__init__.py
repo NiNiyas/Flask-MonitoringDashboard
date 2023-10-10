@@ -20,7 +20,7 @@ def init(app):
         try:
             scheduler.start()
             atexit.register(lambda: scheduler.shutdown())
-            log("Scheduler started")
+            log("Scheduler started.")
         except SchedulerAlreadyRunningError as err:
             log(err)
 

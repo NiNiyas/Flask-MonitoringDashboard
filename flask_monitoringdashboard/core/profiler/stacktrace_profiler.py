@@ -24,7 +24,9 @@ class StacktraceProfiler(threading.Thread):
     This is used when monitoring-level == 2 and monitoring-level == 3
     """
 
-    def __init__(self, thread_to_monitor, endpoint, ip, group_by, outlier_profiler=None):
+    def __init__(
+        self, thread_to_monitor, endpoint, ip, group_by, outlier_profiler=None
+    ):
         threading.Thread.__init__(self)
         self._keeprunning = True
         self._thread_to_monitor = thread_to_monitor
@@ -55,9 +57,11 @@ class StacktraceProfiler(threading.Thread):
             try:
                 frame = sys._current_frames()[self._thread_to_monitor]
             except KeyError:
-                log("Can't get the stacktrace of the main thread. Stopping StacktraceProfiler")
-                log("Thread to monitor: %s" % self._thread_to_monitor)
-                log("Running threads: %s" % sys._current_frames().keys())
+                log(
+                    "Can't get the stacktrace of the main thread. Stopping StacktraceProfiler"
+                )
+                log(f"Thread to monitor: '{self._thread_to_monitor}'.")
+                log(f"Running threads: '{sys._current_frames().keys()}'.")
                 break
             in_endpoint_code = False
             self._path_hash.set_path("")
@@ -68,7 +72,11 @@ class StacktraceProfiler(threading.Thread):
                 if in_endpoint_code:
                     key = (self._path_hash.get_path(fn, ln), fun, line)
                     self._histogram[key] += duration
-                if len(fn) > FILENAME_LEN and fn[-FILENAME_LEN:] == FILENAME and fun == "wrapper":
+                if (
+                    len(fn) > FILENAME_LEN
+                    and fn[-FILENAME_LEN:] == FILENAME
+                    and fun == "wrapper"
+                ):
                     in_endpoint_code = True
             if in_endpoint_code:
                 self._total += duration
@@ -87,7 +95,9 @@ class StacktraceProfiler(threading.Thread):
         self._keeprunning = False
 
     def _on_thread_stopped(self):
-        update_duration_cache(endpoint_name=self._endpoint.name, duration=self._duration)
+        update_duration_cache(
+            endpoint_name=self._endpoint.name, duration=self._duration
+        )
         with session_scope() as session:
             request_id = add_request(
                 session,

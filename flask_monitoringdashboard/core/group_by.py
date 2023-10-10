@@ -39,5 +39,5 @@ def get_group_by():
         if config.group_by:
             group_by = recursive_group_by(config.group_by)
     except Exception as e:
-        log("Can't execute group_by function: {}".format(e))
+        log(f"Can't execute group_by function: {e}")
     return str(group_by)
