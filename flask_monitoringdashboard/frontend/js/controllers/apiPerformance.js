@@ -35,7 +35,14 @@ export function ApiPerformanceController($scope, $http, menuService, formService
                 },
                 yaxis: {
                     type: 'category'
-                }
+                },
+                responsive: true, // Add responsive property
+                displayModeBar: true
+            });
+
+            // Resize chart on window resize
+            window.addEventListener('resize', function() {
+                plotlyService.resize('chart');
             });
         });
     });

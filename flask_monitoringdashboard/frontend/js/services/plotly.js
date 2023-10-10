@@ -25,4 +25,12 @@ export default function (formService) {
         formService.isLoading = false;
         Plotly.newPlot('chart', data, $.extend({}, layout, layout_ext), options);
     }
+
+    this.resize = function(chartId) {
+        Plotly.Plots.resize(chartId);
+    };
+
+    this.react = function(data, config, chartId) {
+        Plotly.newPlot(chartId, data, config);
+    };
 };

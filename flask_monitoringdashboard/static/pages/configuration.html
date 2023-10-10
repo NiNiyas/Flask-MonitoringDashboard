@@ -63,7 +63,10 @@
     <div class="form-group row">
         <label class="col-md-4 col-form-label text-md-right" for="create-admin">Admin</label>
         <div class="col-md-8">
-            <input type="checkbox" id="create-admin" class="form-control" />
+            <div class="form-check">
+                <input type="checkbox" id="create-admin" class="form-check-input" />
+                <label class="form-check-label" for="create-admin">Make this user an admin?</label>
+            </div>
         </div>
     </div>
 </modal>
@@ -73,31 +76,33 @@
         <label class="col-md-4 col-form-label text-md-right" for="edit-username">Username</label>
         <div class="col-md-8">
             <input type="text" id="edit-username" class="form-control"
-                   value="{{ user.username }}" disabled required />
+                   value="{{ user.username }}" disabled />
         </div>
     </div>
     <div class="form-group row">
         <label class="col-md-4 col-form-label text-md-right" for="edit-old-pwd">Old password</label>
         <div class="col-md-8">
-            <input type="password" id="edit-old-pwd" class="form-control" required />
+            <input type="password" id="edit-old-pwd" class="form-control" />
         </div>
     </div>
     <div class="form-group row">
         <label class="col-md-4 col-form-label text-md-right" for="edit-new-pwd">New password</label>
         <div class="col-md-8">
-            <input type="password" id="edit-new-pwd" class="form-control" required />
+            <input type="password" id="edit-new-pwd" class="form-control" />
         </div>
     </div>
     <div class="form-group row">
         <label class="col-md-4 col-form-label text-md-right" for="edit-new-pwd2">Confirm new password</label>
         <div class="col-md-8">
-            <input type="password" id="edit-new-pwd2" class="form-control" required />
+            <input type="password" id="edit-new-pwd2" class="form-control"  />
         </div>
     </div>
     <div class="form-group row">
         <label class="col-md-4 col-form-label text-md-right" for="edit-admin">Admin</label>
         <div class="col-md-8">
-            <input type="checkbox" id="edit-admin" class="form-control" ng-model="user.is_admin" />
+            <div class="form-check">
+                <input type="checkbox" id="edit-admin" class="form-check-input"  ng-model="user.is_admin"/>
+            </div>
         </div>
     </div>
 </modal>

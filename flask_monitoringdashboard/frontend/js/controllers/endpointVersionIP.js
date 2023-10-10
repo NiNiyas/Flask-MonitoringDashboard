@@ -35,7 +35,14 @@ export function EndpointVersionIPController($scope, $http, infoService, endpoint
                     yaxis: {
                         type: 'category',
                         title: 'IP-addresses'
-                    }
+                    },
+                    responsive: true, // Add responsive property
+                    displayModeBar: true
+                });
+
+                // Resize chart on window resize
+                window.addEventListener('resize', function() {
+                    plotlyService.resize('chart');
                 });
         });
     });

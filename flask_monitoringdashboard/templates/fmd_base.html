@@ -27,8 +27,7 @@
             {{ brand_name }}
         </a>
         <button aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
-                class="navbar-toggler ml-auto" data-bs-target="#navbarResponsive" data-bs-toggle="collapse"
-                type="button">
+                class="navbar-toggler ml-auto" data-bs-target="#navbarResponsive" type="button" id="navbarToggler">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
@@ -104,6 +103,23 @@
 </div>
 {% endif %}
 {% endwith %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	document.getElementById('navbarToggler').addEventListener('click', function () {
+		document.getElementById('navbarResponsive').classList.toggle('show');
+	});
+});
+var navbarResponsive = document.getElementById('navbarResponsive');
+navbarResponsive.addEventListener('click', function (event) {
+	if (event.target.classList.contains('menu-link')) {
+		var navbarCollapse = document.querySelector('.navbar-collapse');
+		if (navbarCollapse.classList.contains('show')) {
+			navbarCollapse.classList.remove('show');
+		}
+	}
+});
+</script>
 
 </body>
 </html>

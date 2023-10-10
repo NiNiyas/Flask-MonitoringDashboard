@@ -41,8 +41,14 @@ export function EndpointHourlyLoadController($scope, $http, menuService, endpoin
                         type: 'category',
                         autorange: 'reversed'
                     },
+                    responsive: true, // Add responsive property
+                    displayModeBar: true,
                     margin: {l: 50}
                 }, hover_text);
+
+                window.addEventListener('resize', function() {
+                  plotlyService.resize('chart');
+                });
             });
     });
     formService.reload();

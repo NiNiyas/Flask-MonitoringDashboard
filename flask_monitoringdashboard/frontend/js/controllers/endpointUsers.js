@@ -37,7 +37,14 @@ export function EndpointUsersController($scope, $http, infoService, endpointServ
                 },
                 margin: {
                     l: 200
-                }
+                },
+                responsive: true, // Add responsive property
+                displayModeBar: true
+            });
+
+            // Resize chart on window resize
+            window.addEventListener('resize', function() {
+                plotlyService.resize('chart');
             });
         });
     });

@@ -98,11 +98,10 @@
             </div>
             <hr>
         </div>
-        <div class="d-flex justify-content-between align-items-center pt-3">
-            <div>
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center pt-3">
+            <div class="mb-3 mb-md-0">
                 <button ng-class="generating == true ? 'btn btn-primary disabled' : 'btn btn-primary'"
-                        ng-click="generateReport()"
-                        type="button">
+                        ng-click="generateReport()" type="button">
                     <i class="fas fa-spinner fa-spin" ng-show="generating"></i>
                     {{ generating ? 'Generating...' : 'Generate' }}
                 </button>

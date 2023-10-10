@@ -35,7 +35,13 @@ export function CustomGraphController($scope, $http, infoService, endpointServic
                     },
                     margin: {
                         l: 100
-                    }
+                    },
+                    responsive: true, // Add responsive property
+                    displayModeBar: true
+                });
+                    // Resize chart on window resize
+                    window.addEventListener('resize', function() {
+                        plotlyService.resize('chart');
                 });
             });
     });

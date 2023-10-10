@@ -38,8 +38,14 @@ export function EndpointVersionUserController($scope, $http, infoService, endpoi
                         type: 'category',
                         title: 'Users',
                         autorange: 'reversed'
-                    }
+                    },
+                    responsive: true, // Add responsive property
+                    displayModeBar: true
                 });
+
+                window.addEventListener('resize', function() {
+                plotlyService.resize('chart');
+            });
         });
     });
 }

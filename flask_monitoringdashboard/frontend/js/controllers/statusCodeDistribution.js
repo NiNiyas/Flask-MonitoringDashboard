@@ -7,10 +7,10 @@ export function StatusCodeDistributionController($scope, $http, infoService, end
 
         $http.get('api/endpoint_status_code_summary/' + endpointId).then(function (response) {
 
-            const layout = {
-                height: 400,
-                width: 500,
-            };
+            const config = {
+                responsive: true,
+                displayModeBar: true
+            }
 
             const distribution = response.data.distribution;
 
@@ -24,7 +24,12 @@ export function StatusCodeDistributionController($scope, $http, infoService, end
 
             $scope.error_requests = response.data.error_requests;
 
-            plotlyService.chart(data, layout);
+            plotlyService.react(data, config, 'chart');
+
+            // Resize chart on window resize
+            window.addEventListener('resize', function() {
+                plotlyService.resize('chart');
+            });
         });
     });
 

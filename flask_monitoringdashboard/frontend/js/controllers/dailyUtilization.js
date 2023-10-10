@@ -40,7 +40,14 @@ export function DailyUtilizationController($scope, $http, menuService, formServi
                 yaxis: {
                     type: 'category',
                     autorange: 'reversed'
-                }
+                },
+                responsive: true, // Add responsive property
+                displayModeBar: true
+            });
+
+            // Resize chart on window resize
+            window.addEventListener('resize', function() {
+                plotlyService.resize('chart');
             });
         });
     });

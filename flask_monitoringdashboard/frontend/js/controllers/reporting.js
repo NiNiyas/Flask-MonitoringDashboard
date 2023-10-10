@@ -93,7 +93,14 @@ export function ReportingController($scope, $http, menuService, endpointService,
             yaxis: {
                 title: 'Execution time (ms)',
                 rangemode: "nonnegative"
-            }
+            },
+            responsive: true, // Add responsive property
+            displayModeBar: true
+        });
+
+        // Resize chart on window resize
+        window.addEventListener('resize', function() {
+            plotlyService.resize('chart');
         });
     };
 
