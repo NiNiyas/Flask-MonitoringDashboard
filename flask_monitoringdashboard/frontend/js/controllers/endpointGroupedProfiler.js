@@ -19,7 +19,7 @@ export function EndpointGroupedProfilerController($scope, $http, menuService,
         }
 
         let sunburst = makeSunburst($scope.table, 0);
-        const color = d3.scaleOrdinal(d3.schemeCategory20);
+        const color = d3.scaleOrdinal(d3.schemeCategory10);
 
         Sunburst()
             .data(sunburst)
