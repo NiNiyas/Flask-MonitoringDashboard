@@ -154,6 +154,6 @@ class StacktraceProfiler(threading.Thread):
             for line in lines:
                 lines_returned.append((fn, ln + count, "None", line.strip()))
                 count += 1
-                if line.strip()[:4] == "def ":
+                if line.strip()[:4] == "def " or line.strip()[:10] == "async def ":
                     return lines_returned
         raise ValueError("Cannot retrieve the function header")
